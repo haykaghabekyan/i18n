@@ -4,13 +4,13 @@
 
 1. First, install the package:
 
-```
-   npm install @haykaghabekyan/i18n
+```bash
+  npm install @haykaghabekyan/i18n
 ```
 
 2.	Next, configure the environment variables for your app:
 
-```
+```bash
 I18N_LOCALES=en,fr
 I18N_DEFAULT_LOCALE=en
 I18N_DEFAULT_NAMESPACE=common
@@ -18,7 +18,7 @@ I18N_DEFAULT_NAMESPACE=common
 
 3.	Create the required locale files under public/locales:
 
-```
+```bash
 public/locales/
 ├── en/
 │   ├── common.json
@@ -30,35 +30,58 @@ public/locales/
 
 Example of a locale file (common.json):
 
-```
+```json
 {
   "hello": "Hello",
   "goodbye": "Goodbye"
 }
 ```
 
-## **Client-side usage**
+## **Usage**
+
+### **Server-side usage**
+
+1. You need to import I18nProviderServer from the package.
+
+```ts
+import { I18nProviderServer } from '@haykaghabekyan/i18n';
+```
+
+2. Wrap your app in I18nProviderServer and provide locale and namespaces as props:
+This ensures that translations are fetched and provided to your server-rendered pages.
+
+```ts
+import { ReactNode } from 'react';
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <I18nProviderServer locale="en" namespaces={['common']}>
+      {children}
+    </I18nProviderServer>
+  );
+}
+```
+
+###  **Client-side usage**
 
 1.	Import the useI18n hook:
 Inside your React client components, import the useI18n hook to access translation functions and the current locale.
 
-```
+```ts
 import { useI18n } from '@haykaghabekyan/i18n';
 ```
 
 2.	Use the hook inside your component:
 Once you have the hook imported, you can access the locale, the t function (for translations), and getLocalizedPath (to get localized URLs).
 
-import { useI18n } from '@haykaghabekyan/i18n';
-
-```
+```ts
 const MyComponent = () => {
   const { t, locale, getLocalizedPath } = useI18n();
 
     return (
         <div>
-            <p>{t('hello')}</p>  {/* Output: "Hello" based on current locale */}
-            <p>{t('goodbye')}</p>  {/* Output: "Goodbye" based on current locale */}
+            <p>{t('common:hello')}</p>  {/* Output: "Hello" based on current locale */}
+            <p>{t('common:goodbye')}</p>  {/* Output: "Goodbye" based on current locale */}
 
             <p>Current Locale: {locale}</p>  {/* Current locale (en, fr, etc.) */}
 
@@ -73,9 +96,11 @@ const MyComponent = () => {
 How it works:
 1. locale: Represents the current locale, e.g., "en" or "fr". You can use this to display locale-specific information or manage locale-switching in your app.
 2. t function: Translates a key based on the current locale. If the key is not found in the loaded translations, it returns the key itself. The t function can accept placeholders for dynamic values:
-```bash
-t('greeting', { name: 'John' });  // "Hello, John!"
+
+```ts
+t('common:greeting', { name: 'John' });  // "Hello, John!"
 ```
+
 3. getLocalizedPath(path: string): Returns the localized path by prefixing the provided path with the current locale. For example, calling getLocalizedPath('/about') when the locale is "en" will return "/en/about".
 
 ## **Handling Different Languages**
@@ -83,7 +108,8 @@ t('greeting', { name: 'John' });  // "Hello, John!"
 You can easily extend the supported languages by adding more locale files under public/locales/{language}/. Each language should contain .json files for each namespace, e.g., common.json, footer.json, etc.
 
 For example, for French (fr), you’d create the following structure:
-```
+
+```bash
 public/locales/
 └── fr/
     ├── common.json
@@ -91,7 +117,7 @@ public/locales/
 ```
 
 Example footer.json for French:
-```
+```json
 {
   "footerText": "Bienvenue dans notre site"
 }
@@ -99,23 +125,27 @@ Example footer.json for French:
 
 Usage in Component:
 
-```
-<p>{t('footerText')}</p>  {/* In French locale, output will be: "Bienvenue dans notre site" */}
+```ts
+<p>{t('footer:footerText')}</p>  {/* In French locale, output will be: "Bienvenue dans notre site" */}
 ```
 
 ## **Usage of the Trans component**
-Use the Trans component inside your React components to dynamically inject elements into the translated string.
+1.	You need to import Trans component from the package.
 
-```
+```ts
 import { Trans } from '@haykaghabekyan/i18n';
+```
 
+2.	Use the Trans component inside your React components to dynamically inject elements into the translated string.
+
+```ts
 const MyComponent = () => {
   const userName = "John";
 
   return (
     <div>
       <Trans
-        i18nKey="helloUser"
+        i18nKey="common:helloUser"
         components={{
           user: <strong>{userName}</strong>
         }}
@@ -128,7 +158,7 @@ const MyComponent = () => {
 
 Locale File Example (common.json):
 
-```
+```json
 {
   "helloUser": "Hello, <user />!"
 }
