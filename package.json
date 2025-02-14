@@ -1,0 +1,40 @@
+{
+  "name": "@haykaghabekyan/i18n",
+  "version": "1.0.0",
+  "description": "Lightweight Internationalization for Next.js",
+  "license": "ISC",
+  "author": "Hayk Aghabekyan",
+  "type": "module",
+  "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haykaghabekyan/i18n.git"
+  },
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.8",
+    "typescript": "^5.7.3"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "types": "./dist/types/index.d.ts",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "localization",
+    "nextjs",
+    "multilingual",
+    "translations",
+    "locale",
+    "language-switching",
+    "react"
+  ]
+}
