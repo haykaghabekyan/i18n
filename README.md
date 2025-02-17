@@ -103,6 +103,26 @@ t('common:greeting', { name: 'John' });  // "Hello, John!"
 
 3. getLocalizedPath(path: string): Returns the localized path by prefixing the provided path with the current locale. For example, calling getLocalizedPath('/about') when the locale is "en" will return "/en/about".
 
+### **Using getI18n for Server-side Translations**
+
+getI18n is the server-side equivalent of useI18n. It allows you to fetch translations and use them in server-side components or functions.
+
+1. Import the getI18n function:
+
+```ts
+import { getI18n } from '@haykaghabekyan/i18n';
+```
+
+2. Use getI18n in server-side components or functions. It returns an object similar to useI18n, including locale, t, and getLocalizedPath.
+
+```ts
+export async function MyServerFunction() {
+  const { t } = await getI18n('fr', ['common']);
+
+  console.log(t('common:hello'));  // Output: "Bonjour" (if translation exists)
+}
+```
+
 ## **Handling Different Languages**
 
 You can easily extend the supported languages by adding more locale files under public/locales/{language}/. Each language should contain .json files for each namespace, e.g., common.json, footer.json, etc.

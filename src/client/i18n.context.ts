@@ -1,14 +1,10 @@
 "use client";
 
 import { createContext, Dispatch, SetStateAction } from "react";
-import { i18nConfig } from "../i18n.config";
-
-export interface ITranslations {
-  [key: string]: string | ITranslations | Array<string | ITranslations>;
-}
+import { ITranslations } from "../i18n.types";
 
 export interface I18nContextValue {
-  locale: (typeof i18nConfig.locales)[number];
+  locale: string;
   translations: Record<string, ITranslations>;
 }
 

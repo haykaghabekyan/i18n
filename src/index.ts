@@ -2,7 +2,7 @@ export * from "./i18n.config";
 
 // Server exports
 export { I18nProvider as I18nProviderServer } from "./server/i18n.provider";
-export { fetchTranslations } from "./server/i18n.fetch";
+export { getI18n } from "./server/i18n.get";
 
 // Client exports
 export { I18nProvider as I18nProviderClient } from "./client/i18n.provider";

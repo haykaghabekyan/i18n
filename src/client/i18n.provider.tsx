@@ -1,12 +1,12 @@
 "use client";
 
 import { FC, ReactNode, useState } from "react";
-import { I18nContext, I18nContextValue, ITranslations } from "./i18n.context";
-import { i18nConfig } from "../i18n.config";
+import { I18nContext, I18nContextValue } from "./i18n.context";
+import { ITranslations } from "../i18n.types";
 
 interface IProps {
   children: ReactNode;
-  locale: (typeof i18nConfig.locales)[number];
+  locale: string;
   translations: Record<string, ITranslations>;
 }
 

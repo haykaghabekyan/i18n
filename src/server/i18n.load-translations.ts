@@ -2,24 +2,27 @@
 
 import path from "path";
 import fs from "fs/promises";
-import { ITranslations } from "../client/i18n.context";
 import { i18nConfig } from "../i18n.config";
+import { ITranslations } from "../i18n.types";
 
-export async function fetchTranslations(
-  locale: (typeof i18nConfig.locales)[number],
-  namespaces: string | string[]
+export async function loadTranslations(
+  locale: string,
+  namespaces: string[]
 ): Promise<Record<string, ITranslations>> {
-  const namespaceArray = Array.isArray(namespaces) ? namespaces : [namespaces];
-
   const translations: Record<string, ITranslations> = {};
 
+  // Validate locale before processing
+  const validLocale = i18nConfig.locales.includes(locale)
+    ? locale
+    : i18nConfig.defaultLocale;
+
   await Promise.all(
-    namespaceArray.map(async (namespace) => {
+    namespaces.map(async (namespace) => {
       const filePath = path.join(
         process.cwd(),
         "public",
         "locales",
-        i18nConfig.locales.includes(locale) ? locale : i18nConfig.defaultLocale,
+        validLocale,
         `${namespace}.json`
       );
 
@@ -27,7 +30,7 @@ export async function fetchTranslations(
         const fileContent = await fs.readFile(filePath, "utf-8");
         translations[namespace] = JSON.parse(fileContent);
       } catch (error: unknown) {
-        console.error(`Error loading translation for ${namespace}:`, error);
+        console.error(`Failed to load ${namespace}:`, error);
       }
     })
   );
