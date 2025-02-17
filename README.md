@@ -11,10 +11,14 @@
 2.	Next, configure the environment variables for your app:
 
 ```bash
-I18N_LOCALES=en,fr
-I18N_DEFAULT_LOCALE=en
-I18N_DEFAULT_NAMESPACE=common
+NEXT_PUBLIC_I18N_LOCALES=en,fr
+NEXT_PUBLIC_I18N_DEFAULT_LOCALE=en
+NEXT_PUBLIC_I18N_DEFAULT_NAMESPACE=common
 ```
+
+These environment variables start with NEXT_PUBLIC_ because they are needed both on the server and the client side.
+* If NEXT_PUBLIC_I18N_LOCALES is not provided, the default supported language will be English (en).
+* If NEXT_PUBLIC_I18N_DEFAULT_NAMESPACE is not provided, the default namespace will be common.
 
 3.	Create the required locale files under public/locales:
 
