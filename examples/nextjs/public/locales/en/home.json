@@ -1,0 +1,8 @@
+{
+    "component": "Click on me <clickable />",
+    "click-me": "Click me",
+    "metadata": {
+        "title": "Home page title",
+        "description": "Home page description"
+    }
+}

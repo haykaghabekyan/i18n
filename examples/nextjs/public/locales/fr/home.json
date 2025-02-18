@@ -1,0 +1,8 @@
+{
+    "component": "Cliquez sur moi <clickable />",
+    "click-me": "Cliquez-moi",
+    "metadata": {
+        "title": "Titre de la page d'accueil",
+        "description": "Description de la page d'accueil"
+    }
+}
