@@ -1,7 +1,3 @@
-"use server";
-
-import path from "path";
-import fs from "fs/promises";
 import { i18nConfig } from "../i18n.config";
 import { ITranslations } from "../i18n.types";
 
@@ -18,20 +14,14 @@ export async function loadTranslations(
 
   await Promise.all(
     namespaces.map(async (namespace) => {
-      const filePath = path.join(
-        process.cwd(),
-        "public",
-        "locales",
-        validLocale,
-        `${namespace}.json`
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/locales/${validLocale}/${namespace}.json`
       );
-
-      try {
-        const fileContent = await fs.readFile(filePath, "utf-8");
-        translations[namespace] = JSON.parse(fileContent);
-      } catch (error: unknown) {
-        console.error(`Failed to load ${namespace}:`, error);
+      if (!response.ok) {
+        console.error(`Failed to load ${namespace}:`, response.statusText);
       }
+
+      translations[namespace] = await response.json();
     })
   );
 

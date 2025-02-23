@@ -11,10 +11,25 @@
 2.	Next, configure the environment variables for your app:
 
 ```bash
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_I18N_LOCALES=en,fr
 NEXT_PUBLIC_I18N_DEFAULT_LOCALE=en
 NEXT_PUBLIC_I18N_DEFAULT_NAMESPACE=common
 ```
+
+## 🌍 Internationalization (i18n) Configuration  
+
+This project loads translations dynamically using the **Fetch API**, making it compatible with both the **Edge Runtime** and **Server Components**.  
+
+### 🔧 Environment Variables  
+
+The following **environment variables** must be set in your `.env` file:  
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_BASE_URL` | ✅ Yes | The base URL for fetching translations. This is **mandatory** because translations are now loaded via the Fetch API instead of reading from files. |
+| `NEXT_PUBLIC_I18N_LOCALES` | ❌ No | A comma-separated list of supported locales (e.g., `en,fr,de`). If not provided, the default language will be **English (`en`)**. |
+| `NEXT_PUBLIC_I18N_DEFAULT_NAMESPACE` | ❌ No | The default translation namespace. If not set, it will default to **`common`**. |
 
 These environment variables start with NEXT_PUBLIC_ because they are needed both on the server and the client side.
 * If NEXT_PUBLIC_I18N_LOCALES is not provided, the default supported language will be English (en).
